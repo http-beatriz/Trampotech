@@ -1,0 +1,7 @@
+{
+  "name": "trampotech",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
