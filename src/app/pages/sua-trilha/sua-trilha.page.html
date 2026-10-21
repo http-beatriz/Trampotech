@@ -1,0 +1,173 @@
+<ion-content [fullscreen]="true" class="trilha-bg">
+  <div class="page-wrapper">
+
+    <!-- Header Superior -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <span class="logo">trilha</span>
+        <span class="divider">|</span>
+        <span class="tagline">Conhecimento que vira ação.</span>
+      </div>
+
+      <div class="top-bar-right">
+        <button class="search-btn">
+          <ion-icon name="search-outline"></ion-icon>
+          <span>Buscar conceitos</span>
+        </button>
+
+        <div class="env-pill">
+          <span class="env-dot"></span>
+          <span>Ambiente de exemplo</span>
+        </div>
+
+        <div class="avatar-circle" [title]="usuarioLogado?.nome || 'Marina Costa'">
+          {{ iniciaisUsuario }}
+        </div>
+      </div>
+    </header>
+
+    <!-- Stepper Bar -->
+    <div class="stepper-bar">
+      <div class="step completed">
+        <span class="step-circle">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </span>
+        <span class="step-label">Sua conta</span>
+      </div>
+
+      <div class="step completed">
+        <span class="step-circle">
+          <ion-icon name="checkmark-outline"></ion-icon>
+        </span>
+        <span class="step-label">Diagnóstico</span>
+      </div>
+
+      <div class="step active">
+        <span class="step-circle">3</span>
+        <span class="step-label">Sua trilha</span>
+      </div>
+    </div>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-container">
+      
+      <!-- Cabeçalho da Seção -->
+      <div class="section-header">
+        <span class="eyebrow">SUA TRILHA</span>
+        <h1 class="page-title">Escolha como quer começar.</h1>
+        <p class="page-subtitle">
+          As duas opções começam pelo essencial. Você decide qual abordagem faz mais sentido.
+        </p>
+      </div>
+
+      <!-- Grid dos 2 Cards de Trilha -->
+      <div class="cards-grid">
+        
+        <!-- Card 1: Da ideia à execução -->
+        <div 
+          class="trail-card" 
+          [class.selected]="trilhaSelecionada === 'execucao'"
+          (click)="selecionarTrilha('execucao')">
+          
+          <div class="card-top">
+            <span class="badge-recommended">
+              <ion-icon name="compass-outline"></ion-icon>
+              Recomendada para você
+            </span>
+            <div class="radio-circle" [class.checked]="trilhaSelecionada === 'execucao'"></div>
+          </div>
+
+          <h2 class="card-title">Da ideia à execução</h2>
+          <p class="card-desc">
+            Exemplos e foco nas lacunas do diagnóstico: validação de hipóteses e priorização.
+          </p>
+
+          <hr class="card-divider" />
+
+          <div class="modules-info">
+            <strong>5 módulos • sequência guiada</strong>
+            <p class="modules-flow">
+              Estratégia e discovery → Metodologias → Priorização e roadmap → Pessoas e cultura → Métricas e riscos
+            </p>
+          </div>
+
+          <p class="first-step">
+            Primeiro passo: testar a hipótese certa.
+          </p>
+        </div>
+
+        <!-- Card 2: Comece pelos fundamentos -->
+        <div 
+          class="trail-card" 
+          [class.selected]="trilhaSelecionada === 'fundamentos'"
+          (click)="selecionarTrilha('fundamentos')">
+          
+          <div class="card-top">
+            <span class="badge-beginner">
+              <span class="circle-icon"></span>
+              Padrão iniciante
+            </span>
+            <div class="radio-circle" [class.checked]="trilhaSelecionada === 'fundamentos'"></div>
+          </div>
+
+          <h2 class="card-title">Comece pelos fundamentos</h2>
+          <p class="card-desc">
+            Uma introdução ampla, com exemplos essenciais para quem está começando em gestão.
+          </p>
+
+          <hr class="card-divider" />
+
+          <div class="modules-info">
+            <strong>5 módulos • sequência guiada</strong>
+            <p class="modules-flow">
+              Estratégia e discovery → Metodologias → Priorização e roadmap → Pessoas e cultura → Métricas e riscos
+            </p>
+          </div>
+
+          <p class="first-step">
+            Primeiro passo: entender como descobrir valor.
+          </p>
+        </div>
+
+      </div>
+
+      <!-- Caixa de Aviso / Orientação -->
+      <div class="info-banner">
+        <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
+        <div class="info-text">
+          <strong>
+            {{ trilhaSelecionada ? 'Trilha selecionada! Pronto para continuar.' : 'Selecione uma trilha para continuar.' }}
+          </strong>
+          <p>
+            O diagnóstico orienta o foco, mas não conclui módulos. Só o primeiro módulo estará disponível.
+          </p>
+        </div>
+      </div>
+
+      <!-- Barra de Ações (Voltar / Continuar) -->
+      <div class="actions-row">
+        <button type="button" class="btn-back" (click)="voltar()">
+          <ion-icon name="arrow-back-outline"></ion-icon>
+          <span>Voltar ao resultado</span>
+        </button>
+
+        <button 
+          type="button" 
+          class="btn-continue" 
+          [disabled]="!trilhaSelecionada"
+          (click)="continuar()">
+          <span>Continuar</span>
+          <ion-icon name="arrow-forward-outline"></ion-icon>
+        </button>
+      </div>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bottom-bar">
+      <span>trilha • Gestão de projetos para startups</span>
+      <span>Um passo de cada vez.</span>
+    </footer>
+
+  </div>
+</ion-content>

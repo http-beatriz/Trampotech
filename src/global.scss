@@ -32,6 +32,78 @@
  * https://ionicframework.com/docs/theming/dark-mode
  */
 
-/* @import "@ionic/angular/css/palettes/dark.always.css"; */
-/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+/* 
+@import "@ionic/angular/css/palettes/dark.always.css";
+@import "@ionic/angular/css/palettes/dark.class.css";
 @import '@ionic/angular/css/palettes/dark.system.css';
+*/
+
+
+/* Importando a fonte Roboto (300, 400, 500, 700) */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+  /* Paleta da Marca */
+  --trilha-marca-500: #FF7A00;
+  --trilha-marca-400: #FF9B3D;
+  --trilha-marca-100: #FFD9B3;
+  --trilha-marca-600: #E56E00;
+  --trilha-marca-700: #CC6200;
+  --trilha-acao-aa:   #A84300;
+
+  /* Cores Semânticas e Superfície */
+  --trilha-texto:            #292621;
+  --trilha-texto-secundario: #625B53;
+  --trilha-sucesso:          #196444;
+  --trilha-erro:             #B42332;
+  --trilha-contorno:         #71685F;
+  --trilha-superficie:       #FFFFFF;
+  --trilha-bg-pagina:        #FAF8F5;
+
+  /* Fonte padrão do Ionic */
+  --ion-font-family: 'Roboto', sans-serif;
+  --ion-text-color: #292621;
+}
+
+/* Classes Utilitárias de Tipografia do Protótipo */
+.trilha-display {
+  font-size: 48px;
+  line-height: 57px;
+  font-weight: 700;
+  color: var(--trilha-texto);
+}
+
+.trilha-titulo {
+  font-size: 32px;
+  line-height: 38px;
+  font-weight: 700;
+  color: var(--trilha-texto);
+}
+
+.trilha-heading {
+  font-size: 24px;
+  line-height: 36px;
+  font-weight: 500;
+  color: var(--trilha-texto);
+}
+
+.trilha-corpo {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+  color: var(--trilha-texto);
+}
+
+.trilha-auxiliar {
+  font-size: 14px;
+  line-height: 21px;
+  font-weight: 500;
+  color: var(--trilha-texto-secundario);
+}
+
+.trilha-rotulo {
+  font-size: 12px;
+  line-height: 18px;
+  font-weight: 400;
+  color: var(--trilha-texto-secundario);
+}

@@ -1,21 +1,521 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title>{{ folder() }}</ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content [fullscreen]="true" class="trilha-bg">
+  <div class="app-shell">
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">{{ folder() }}</ion-title>
-    </ion-toolbar>
-  </ion-header>
+    <!-- Top Header -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <span class="logo">trilha</span>
+        <span class="divider">|</span>
+        <span class="tagline">Conhecimento que vira ação.</span>
+      </div>
 
-  <div id="container">
-    <strong class="capitalize">{{ folder() }}</strong>
-    <p>Explore <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+      <div class="top-bar-right">
+        <button type="button" class="search-btn">
+          <ion-icon name="search-outline"></ion-icon>
+          <span>Buscar conceitos</span>
+        </button>
+
+        <div class="env-pill">
+          <span class="env-dot"></span>
+          <span>Ambiente de exemplo</span>
+        </div>
+
+        <div class="avatar-circle" (click)="selecionarAba('perfil')" title="Ver / Editar Perfil">
+          {{ iniciaisUsuario }}
+        </div>
+      </div>
+    </header>
+
+    <!-- Corpo Principal: Sidebar Esquerda (208px) + Área de Conteúdo -->
+    <div class="workspace">
+
+      <!-- Navegação Global Lateral (208px) -->
+      <aside class="sidebar">
+        <span class="nav-section-title">NAVEGAÇÃO</span>
+
+        <nav class="nav-list">
+          <button 
+            type="button" 
+            class="nav-item" 
+            [class.active]="abaAtiva === 'visao-geral'"
+            (click)="selecionarAba('visao-geral')">
+            <ion-icon name="git-network-outline"></ion-icon>
+            <span>Visão geral</span>
+          </button>
+
+          <button 
+            type="button" 
+            class="nav-item" 
+            [class.active]="abaAtiva === 'tutor'"
+            (click)="selecionarAba('tutor')">
+            <ion-icon name="chatbubbles-outline"></ion-icon>
+            <span>Tutor IA</span>
+          </button>
+
+          <button 
+            type="button" 
+            class="nav-item" 
+            [class.active]="abaAtiva === 'avaliacoes'"
+            (click)="selecionarAba('avaliacoes')">
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <span>Avaliações</span>
+          </button>
+
+          <button 
+            type="button" 
+            class="nav-item" 
+            [class.active]="abaAtiva === 'perfil'"
+            (click)="selecionarAba('perfil')">
+            <ion-icon name="person-outline"></ion-icon>
+            <span>Editar perfil</span>
+          </button>
+        </nav>
+
+        <div class="sidebar-divider"></div>
+
+        <div class="sidebar-trail-summary">
+          <span class="summary-label">TRILHA RECOMENDADA</span>
+          <strong class="summary-title">{{ nomeTrilhaAtiva }}</strong>
+          <p class="summary-desc">5 módulos conectados ao seu negócio.</p>
+        </div>
+      </aside>
+
+      <!-- ========================================================= -->
+      <!-- ABA 1: VISÃO GERAL (GRAFO DE CONHECIMENTO)                -->
+      <!-- ========================================================= -->
+      <main class="content-area" *ngIf="abaAtiva === 'visao-geral'">
+        
+        <div class="page-header-row">
+          <div>
+            <span class="eyebrow">TRILHA RECOMENDADA</span>
+            <h1 class="page-title">Seu grafo de conhecimento</h1>
+            <p class="page-subtitle">
+              Comece pelo módulo inicial e avance com evidências do que você aprendeu.
+            </p>
+          </div>
+
+          <button type="button" class="btn-tutor-outline" (click)="selecionarAba('tutor')">
+            Abrir tutor IA
+          </button>
+        </div>
+
+        <div class="progress-card">
+          <div class="progress-stats">
+            <span class="big-fraction">0/5</span>
+            <span class="stats-text">módulos concluídos • 0%</span>
+          </div>
+
+          <div class="progress-bars-wrapper">
+            <div class="progress-bars-header">
+              <strong>Aprendizagem comprovada</strong>
+              <span>0 de 5</span>
+            </div>
+            <div class="segmented-bar">
+              <div class="segment"></div>
+              <div class="segment"></div>
+              <div class="segment"></div>
+              <div class="segment"></div>
+              <div class="segment"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="graph-workspace-grid">
+          <section class="graph-card">
+            <div class="graph-card-header">
+              <strong>5 módulos • 19 conceitos</strong>
+              <span>Visão completa</span>
+            </div>
+
+            <div class="knowledge-graph">
+              <svg class="graph-lines" viewBox="0 0 700 500" preserveAspectRatio="none">
+                <line x1="350" y1="275" x2="350" y2="135" class="line-active" />
+                <line x1="350" y1="275" x2="170" y2="260" />
+                <line x1="350" y1="275" x2="530" y2="260" />
+                <line x1="350" y1="275" x2="235" y2="395" />
+                <line x1="350" y1="275" x2="465" y2="395" />
+              </svg>
+
+              <div class="graph-row top-row">
+                <div class="module-node unlocked" (click)="selecionarAba('tutor')" style="cursor: pointer;">
+                  <div class="node-status">
+                    <ion-icon name="play-circle-outline"></ion-icon>
+                    <span>Desbloqueado</span>
+                  </div>
+                  <h3>Estratégia e discovery</h3>
+                  <ul>
+                    <li>Validação de hipóteses</li>
+                    <li>MVP</li>
+                    <li>Product-market fit</li>
+                    <li>OKRs</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="graph-row middle-row">
+                <div class="module-node locked">
+                  <div class="node-status">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <span>Bloqueado</span>
+                  </div>
+                  <h3>Métricas e riscos</h3>
+                  <ul>
+                    <li>North Star</li>
+                    <li>Burn rate</li>
+                    <li>Velocity</li>
+                    <li>Gestão de riscos</li>
+                  </ul>
+                </div>
+
+                <div class="center-hub">
+                  Gestão de<br />projetos em<br />startups
+                </div>
+
+                <div class="module-node locked">
+                  <div class="node-status">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <span>Bloqueado</span>
+                  </div>
+                  <h3>Metodologias</h3>
+                  <ul>
+                    <li>Scrum</li>
+                    <li>Kanban</li>
+                    <li>Lean Startup</li>
+                    <li>Shape Up</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="graph-row bottom-row">
+                <div class="module-node locked">
+                  <div class="node-status">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <span>Bloqueado</span>
+                  </div>
+                  <h3>Pessoas e cultura</h3>
+                  <ul>
+                    <li>Feedback</li>
+                    <li>Rituais</li>
+                    <li>Comunicação assíncrona</li>
+                  </ul>
+                </div>
+
+                <div class="module-node locked">
+                  <div class="node-status">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <span>Bloqueado</span>
+                  </div>
+                  <h3>Priorização e roadmap</h3>
+                  <ul>
+                    <li>RICE</li>
+                    <li>MoSCoW</li>
+                    <li>Backlog</li>
+                    <li>Roadmap</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="graph-legend">
+              <div class="legend-pills">
+                <span class="pill unlocked">
+                  <ion-icon name="play-circle-outline"></ion-icon> Desbloqueado
+                </span>
+                <span class="pill progress">
+                  <ion-icon name="time-outline"></ion-icon> Em andamento
+                </span>
+                <span class="pill completed">
+                  <ion-icon name="checkmark-outline"></ion-icon> Concluído
+                </span>
+                <span class="pill locked">
+                  <ion-icon name="lock-closed-outline"></ion-icon> Bloqueado
+                </span>
+              </div>
+              <p class="legend-note">
+                Somente o módulo inicial está desbloqueado. Disponível não significa concluído.
+              </p>
+            </div>
+          </section>
+
+          <aside class="right-column">
+            <div class="side-card">
+              <span class="badge-initial">
+                <ion-icon name="play-circle-outline"></ion-icon>
+                Módulo inicial
+              </span>
+              <h2>Estratégia e discovery</h2>
+              <p>
+                Transforme incertezas em hipóteses e experimentos de baixo custo.
+              </p>
+              <strong class="module-count">Módulo 1 de 5</strong>
+
+              <button type="button" class="btn-start-study" (click)="iniciarEstudo()">
+                Iniciar estudo
+              </button>
+            </div>
+
+            <div class="side-alert">
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <div>
+                <strong>Conclua a avaliação para liberar o próximo módulo</strong>
+                <p>
+                  Estudar e conversar com a IA não altera seu progresso. O desbloqueio acontece após a aprovação.
+                </p>
+              </div>
+            </div>
+
+            <div class="side-card sequence-card">
+              <h3>Sua sequência</h3>
+              <ol class="sequence-list">
+                <li class="active"><span>01</span> Estratégia e discovery</li>
+                <li><span>02</span> Metodologias</li>
+                <li><span>03</span> Priorização e roadmap</li>
+                <li><span>04</span> Pessoas e cultura</li>
+                <li><span>05</span> Métricas e riscos</li>
+              </ol>
+            </div>
+          </aside>
+        </div>
+      </main>
+
+      <!-- ========================================================= -->
+      <!-- ABA 2: TUTOR IA (QUAL É A DOR REAL DO SEU NEGÓCIO AGORA?) -->
+      <!-- ========================================================= -->
+      <main class="content-area" *ngIf="abaAtiva === 'tutor'">
+        
+        <!-- Cabeçalho da Página do Tutor IA -->
+        <div class="page-header-row">
+          <div>
+            <span class="eyebrow">TUTOR IA • ESTUDO COM CONTEXTO</span>
+            <h1 class="page-title">Qual é a dor real do seu negócio agora?</h1>
+            <p class="page-subtitle">
+              Conte o tipo de negócio, o estágio e o que está travando. O tutor usa o módulo atual como contexto.
+            </p>
+          </div>
+
+          <div class="module-status-pill">
+            <span class="status-dot"></span>
+            <span>Módulo 1/5 • 0 concluídos</span>
+          </div>
+        </div>
+
+        <!-- Grid Principal do Tutor: Chat à esquerda + Contexto atual à direita -->
+        <div class="tutor-workspace-grid">
+
+          <!-- Coluna Esquerda: Card Principal de Interação do Tutor -->
+          <section class="tutor-chat-card">
+            <div class="tutor-chat-header">
+              <strong>Contexto do módulo</strong>
+              <span>Módulo inicial • Estratégia e discovery</span>
+            </div>
+
+            <!-- Lista de Mensagens (Inicial + Histórico salvo no localStorage) -->
+            <div class="messages-list">
+              <div class="message-row" *ngFor="let msg of mensagensTutor" [class.user-msg]="msg.autor === 'usuario'">
+                <span class="msg-caption">{{ msg.titulo }}</span>
+                <div class="msg-bubble-wrapper">
+                  <div class="avatar-ia" *ngIf="msg.autor === 'ia'"></div>
+                  <div class="msg-bubble">
+                    {{ msg.texto }}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Caixa Laranja Suave: "Conte o seu contexto" -->
+            <div class="context-highlight-box">
+              <h2>Conte o seu contexto</h2>
+              <p>
+                Tipo de negócio, estágio e dor real. O tutor usa isso para destacar conceitos do módulo atual.
+              </p>
+              <strong class="examples-text">
+                Exemplos: validar uma ideia, alinhar a equipe ou escolher um experimento.
+              </strong>
+            </div>
+
+            <!-- Outros Conceitos do Módulo (Chips selecionáveis) -->
+            <div class="other-concepts-block">
+              <span class="concepts-label">OUTROS CONCEITOS DO MÓDULO</span>
+              <div class="concepts-chips">
+                <button 
+                  type="button" 
+                  class="concept-chip" 
+                  [class.selected]="conceitoSelecionado === 'Criar uma hipótese'"
+                  (click)="selecionarConceito('Criar uma hipótese')">
+                  <ion-icon name="compass-outline" *ngIf="conceitoSelecionado === 'Criar uma hipótese'"></ion-icon>
+                  <span class="chip-dot" *ngIf="conceitoSelecionado !== 'Criar uma hipótese'"></span>
+                  <span>Criar uma hipótese</span>
+                </button>
+
+                <button 
+                  type="button" 
+                  class="concept-chip" 
+                  [class.selected]="conceitoSelecionado === 'Planejar um MVP'"
+                  (click)="selecionarConceito('Planejar um MVP')">
+                  <ion-icon name="compass-outline" *ngIf="conceitoSelecionado === 'Planejar um MVP'"></ion-icon>
+                  <span class="chip-dot" *ngIf="conceitoSelecionado !== 'Planejar um MVP'"></span>
+                  <span>Planejar um MVP</span>
+                </button>
+
+                <button 
+                  type="button" 
+                  class="concept-chip" 
+                  [class.selected]="conceitoSelecionado === 'Entender RICE'"
+                  (click)="selecionarConceito('Entender RICE')">
+                  <ion-icon name="compass-outline" *ngIf="conceitoSelecionado === 'Entender RICE'"></ion-icon>
+                  <span class="chip-dot" *ngIf="conceitoSelecionado !== 'Entender RICE'"></span>
+                  <span>Entender RICE</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Input de Mensagem com Botão Seta para Cima -->
+            <div class="chat-input-wrapper">
+              <input 
+                type="text" 
+                [(ngModel)]="textoMensagem" 
+                (keyup.enter)="enviarMensagemTutor()"
+                placeholder="Conte o tipo de negócio, o estágio e a dor real..." />
+              <button type="button" class="btn-send" (click)="enviarMensagemTutor()" title="Enviar contexto">
+                <ion-icon name="arrow-up-outline"></ion-icon>
+              </button>
+            </div>
+
+            <p class="chat-helper-tiny">
+              A IA usa o contexto para destacar conceitos. Revise as sugestões antes de aplicar.
+            </p>
+
+            <p class="chat-helper-footer">
+              Use o tutor como ferramenta de estudo. O progresso segue a avaliação do módulo.
+            </p>
+          </section>
+
+          <!-- Coluna Direita: Contexto do módulo atual -->
+          <aside class="right-column">
+            
+            <div class="side-card context-module-card">
+              <h3>Contexto do módulo atual</h3>
+
+              <span class="badge-initial">
+                <ion-icon name="play-circle-outline"></ion-icon>
+                Módulo 1/5 • 0 concluídos
+              </span>
+
+              <strong class="module-main-name">Estratégia e discovery</strong>
+
+              <div class="module-meta">
+                <p>Concluídos: 0/5</p>
+                <p>Atual: Estratégia e discovery</p>
+                <p>Bloqueados: próximos 4 módulos</p>
+              </div>
+
+              <!-- Lista de Tópicos e Módulos Bloqueados -->
+              <div class="context-topics-list">
+                <div class="topic-active-box">
+                  <ion-icon name="play-circle-outline"></ion-icon>
+                  <span>Validação de hipóteses</span>
+                </div>
+
+                <div class="topic-subitems">
+                  ◦ MVP • Product-market fit • OKRs
+                </div>
+
+                <div class="topic-locked-item">
+                  <ion-icon name="lock-closed-outline"></ion-icon>
+                  <span>Metodologias</span>
+                </div>
+
+                <div class="topic-locked-item highlighted-bg">
+                  <ion-icon name="lock-closed-outline"></ion-icon>
+                  <span>Priorização e roadmap • RICE</span>
+                </div>
+
+                <div class="topic-locked-item">
+                  <ion-icon name="lock-closed-outline"></ion-icon>
+                  <span>Pessoas e cultura</span>
+                </div>
+
+                <div class="topic-locked-item">
+                  <ion-icon name="lock-closed-outline"></ion-icon>
+                  <span>Métricas e riscos</span>
+                </div>
+              </div>
+
+              <p class="context-card-note">
+                O foco será destacado depois que você contar seu contexto.
+              </p>
+            </div>
+
+            <!-- Banner Informativo Lateral -->
+            <div class="side-alert">
+              <ion-icon name="information-circle-outline"></ion-icon>
+              <div>
+                <strong>Destaca conceitos e conexões sem marcar concluído</strong>
+                <p>
+                  O tutor destaca conceitos do módulo atual. A liberação segue a avaliação do módulo.
+                </p>
+              </div>
+            </div>
+
+            <p class="right-bottom-caption">
+              Contexto ilustrativo do módulo inicial. Não altera seu progresso real.
+            </p>
+
+          </aside>
+
+        </div>
+      </main>
+
+      <!-- ========================================================= -->
+      <!-- ABA 3 & 4: EDITAR PERFIL / AVALIAÇÕES (PAINEL CRUD)       -->
+      <!-- ========================================================= -->
+      <main class="content-area" *ngIf="abaAtiva === 'perfil' || abaAtiva === 'avaliacoes'">
+        <div class="page-header-row">
+          <div>
+            <span class="eyebrow">PERSISTÊNCIA DE DADOS • LOCALSTORAGE</span>
+            <h1 class="page-title">Gerir Perfil e Utilizadores (CRUD)</h1>
+            <p class="page-subtitle">
+              Aqui podes visualizar, atualizar (Update) ou remover (Delete) os dados guardados no <code>localStorage</code>.
+            </p>
+          </div>
+          <button type="button" class="btn-start-study" style="width: auto; padding: 0 20px;" (click)="irParaCadastro()">
+            + Novo Utilizador (Create)
+          </button>
+        </div>
+
+        <div class="crud-list">
+          <div class="crud-item" *ngFor="let u of usuarios">
+            <div class="crud-view" *ngIf="editandoId !== u.id">
+              <div>
+                <h3>{{ u.nome }}</h3>
+                <p>{{ u.email }} • Trilha: <strong>{{ u.trilhaEscolhida === 'fundamentos' ? 'Comece pelos fundamentos' : 'Da ideia à execução' }}</strong></p>
+              </div>
+              <div class="crud-buttons">
+                <button type="button" class="btn-tutor-outline" (click)="iniciarEdicao(u)">Editar</button>
+                <button type="button" class="btn-delete" (click)="excluirUsuario(u.id)">Excluir</button>
+              </div>
+            </div>
+
+            <div class="crud-edit" *ngIf="editandoId === u.id">
+              <div class="crud-inputs">
+                <input type="text" [(ngModel)]="formEdicao.nome" placeholder="Nome" />
+                <input type="email" [(ngModel)]="formEdicao.email" placeholder="E-mail" />
+                <select [(ngModel)]="formEdicao.trilhaEscolhida">
+                  <option value="execucao">Da ideia à execução</option>
+                  <option value="fundamentos">Comece pelos fundamentos</option>
+                </select>
+              </div>
+              <div class="crud-buttons">
+                <button type="button" class="btn-tutor-outline" (click)="cancelarEdicao()">Cancelar</button>
+                <button type="button" class="btn-start-study" style="width: auto; padding: 0 20px;" (click)="salvarEdicao(u)">
+                  Guardar no localStorage
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+    </div>
   </div>
 </ion-content>

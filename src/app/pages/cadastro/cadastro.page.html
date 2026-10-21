@@ -1,0 +1,167 @@
+<ion-content [fullscreen]="true" class="trilha-bg">
+  <div class="page-wrapper">
+    
+    <!-- Top Header -->
+    <header class="top-bar">
+      <div class="top-bar-left">
+        <span class="logo">trilha</span>
+        <span class="divider">|</span>
+        <span class="tagline">Conhecimento que vira ação.</span>
+        <span class="login-prompt">
+          {{ modoLogin ? 'Ainda não tem conta?' : 'Já tem uma conta?' }}
+          <a (click)="alternarModo()">{{ modoLogin ? 'Criar conta' : 'Entrar' }}</a>
+        </span>
+      </div>
+    </header>
+
+    <!-- Stepper Bar -->
+    <div class="stepper-bar">
+      <div class="step active">
+        <span class="step-circle">1</span>
+        <span class="step-label">Sua conta</span>
+      </div>
+      <div class="step">
+        <span class="step-circle">2</span>
+        <span class="step-label">Diagnóstico</span>
+      </div>
+      <div class="step">
+        <span class="step-circle">3</span>
+        <span class="step-label">Sua trilha</span>
+      </div>
+    </div>
+
+    <!-- Main Container (2 Colunas) -->
+    <main class="main-container">
+      
+      <!-- Coluna Esquerda: Card Ilustrativo -->
+      <section class="info-card">
+        <div class="badge-top">
+          <ion-icon name="compass-outline"></ion-icon>
+          <span>DA IDEIA À EXECUÇÃO</span>
+        </div>
+
+        <h1 class="hero-title">
+          O próximo passo da sua startup começa aqui.
+        </h1>
+
+        <p class="hero-subtitle">
+          Descubra o que estudar primeiro e aplique gestão de projetos com um tutor IA ao seu lado.
+        </p>
+
+        <!-- Mindmap Diagram -->
+        <div class="mindmap">
+          <!-- Linhas conectoras em SVG ao fundo -->
+          <svg class="mindmap-lines" viewBox="0 0 400 180" preserveAspectRatio="none">
+            <line x1="90" y1="35" x2="200" y2="90" />
+            <line x1="310" y1="35" x2="200" y2="90" />
+            <line x1="90" y1="145" x2="200" y2="90" />
+            <line x1="310" y1="145" x2="200" y2="90" />
+          </svg>
+
+          <div class="node-row">
+            <div class="node-white">Descobrir lacunas</div>
+            <div class="node-white">Aprender com IA</div>
+          </div>
+
+          <div class="node-center-row">
+            <div class="node-orange">Sua startup</div>
+          </div>
+
+          <div class="node-row">
+            <div class="node-white">Testar hipóteses</div>
+            <div class="node-white">Avançar com clareza</div>
+          </div>
+        </div>
+
+        <p class="card-footer-text">
+          Um mapa de conhecimento. Uma sequência possível. Seu contexto no centro dos exemplos.
+        </p>
+      </section>
+
+      <!-- Coluna Direita: Formulário -->
+      <section class="form-section">
+        <h2 class="form-title">{{ modoLogin ? 'Acesse sua conta' : 'Crie sua conta' }}</h2>
+        <p class="form-subtitle">
+          Vamos construir seu ponto de partida, {{ primeiroNome }}.
+        </p>
+
+        <form [formGroup]="form" (ngSubmit)="submeter()">
+          
+          <!-- Campo Nome (esconde se estiver no modo Login) -->
+          <div class="form-group" *ngIf="!modoLogin">
+            <label>Nome completo</label>
+            <div class="input-box" [class.valid]="form.get('nome')?.valid">
+              <input type="text" formControlName="nome" placeholder="Digite seu nome completo" />
+              <ion-icon 
+                *ngIf="form.get('nome')?.valid" 
+                name="checkmark-circle-outline" 
+                class="valid-icon">
+              </ion-icon>
+            </div>
+            <div class="validation-msg" *ngIf="form.get('nome')?.valid">
+              <ion-icon name="checkmark-outline"></ion-icon> Nome preenchido.
+            </div>
+          </div>
+
+          <!-- Campo E-mail -->
+          <div class="form-group">
+            <label>E-mail</label>
+            <div class="input-box" [class.valid]="form.get('email')?.valid">
+              <input type="email" formControlName="email" placeholder="seu@email.com" />
+              <ion-icon 
+                *ngIf="form.get('email')?.valid" 
+                name="checkmark-circle-outline" 
+                class="valid-icon">
+              </ion-icon>
+            </div>
+            <div class="validation-msg" *ngIf="form.get('email')?.valid">
+              <ion-icon name="checkmark-outline"></ion-icon> Formato de e-mail válido.
+            </div>
+          </div>
+
+          <!-- Campo Senha -->
+          <div class="form-group">
+            <label>Senha</label>
+            <div class="input-box" [class.valid]="form.get('senha')?.valid">
+              <input type="password" formControlName="senha" placeholder="••••••••••••" />
+              <ion-icon 
+                *ngIf="form.get('senha')?.valid" 
+                name="checkmark-circle-outline" 
+                class="valid-icon">
+              </ion-icon>
+            </div>
+            <div class="validation-msg" *ngIf="form.get('senha')?.valid">
+              <ion-icon name="checkmark-outline"></ion-icon> 8 ou mais caracteres • letras e números
+            </div>
+          </div>
+
+          <!-- Checkbox Termos -->
+          <div class="checkbox-group" *ngIf="!modoLogin">
+            <ion-checkbox formControlName="termos" mode="md"></ion-checkbox>
+            <span>
+              Quero criar minha conta e usar minhas respostas para receber um diagnóstico e uma sugestão de estudos.
+            </span>
+          </div>
+
+          <!-- Botão Principal -->
+          <button type="submit" class="btn-submit">
+            {{ modoLogin ? 'Entrar na plataforma' : 'Criar conta e começar' }}
+            <ion-icon name="arrow-forward-outline"></ion-icon>
+          </button>
+
+          <p class="disclaimer">
+            As próximas telas usam situações ilustrativas. Não compartilhe informações confidenciais da sua empresa.
+          </p>
+        </form>
+      </section>
+
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="bottom-bar">
+      <span>trilha • Gestão de projetos para startups</span>
+      <span>Um passo de cada vez.</span>
+    </footer>
+
+  </div>
+</ion-content>
